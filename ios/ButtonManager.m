@@ -6,7 +6,7 @@
 //
 
 #import "React/RCTViewManager.h"
-#import "Rainbow-Swift.h"
+#import "Nfteka-Swift.h"
 
 @interface RCT_EXTERN_MODULE(ButtonManager, RCTViewManager)
 

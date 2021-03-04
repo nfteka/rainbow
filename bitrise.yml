@@ -31,8 +31,8 @@ workflows:
               echo "Changes were detected in yarn.lock file after running 'yarn install', which is not expected. Please run 'yarn install' locally and commit the changes.";
               exit 1;
             fi
-    before_run: 
-    after_run: 
+    before_run:
+    after_run:
   lint:
     before_run: []
     after_run: []
@@ -98,7 +98,7 @@ workflows:
         title: Fastlane - Submit to Testflight
     - xcode-project-info@2:
         inputs:
-        - xcodeproj_path: ios/Rainbow.xcodeproj
+        - xcodeproj_path: ios/Nfteka.xcodeproj
         - info_plist_path: ios/Rainbow/Info.plist
         title: Expose build number to ENV vars
     - yarn@0.1.1:
@@ -118,7 +118,7 @@ workflows:
             set -ex
 
             # get the values
-            INFO_XCODE_PROJ=./ios/Rainbow.xcodeproj/project.pbxproj
+            INFO_XCODE_PROJ=./ios/Nfteka.xcodeproj/project.pbxproj
             version=$(cat "${INFO_XCODE_PROJ}" | grep "MARKETING_VERSION" | head -n 1 | sed  's/[^0-9\.]//g')
 
             # expose the env vars for subsequent steps
