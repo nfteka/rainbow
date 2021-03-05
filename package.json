@@ -377,7 +377,7 @@
   },
   "lavamoat": {
     "allowScripts": {
-      "Rainbow": false,
+      "Nfteka": false,
       "@scarf/scarf": false,
       "@lavamoat/preinstall-always-fail": false,
       "core-js": false,
