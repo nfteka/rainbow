@@ -41,7 +41,7 @@ const HeaderOpacityToggler = styled(OpacityToggler).attrs(({ isVisible }) => ({
   z-index: 1;
 `;
 
-const WalletPage = styled(Page)`
+export const WalletPage = styled(Page)`
   ${position.size('100%')};
   flex: 1;
 `;

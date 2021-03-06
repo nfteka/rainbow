@@ -24,6 +24,7 @@ import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import WithdrawModal from '../screens/WithdrawModal';
+import { AssetsRoutes } from './AssetsRoutes';
 import { SwipeNavigator } from './SwipeNavigator';
 import {
   backupSheetConfig,
@@ -141,6 +142,21 @@ function MainNavigator() {
   );
 }
 
+function MainStackNavigator() {
+  return (
+    <Stack.Navigator
+      {...stackNavigationConfig}
+      initialRouteName={Routes.ASSETS_LAYOUT}
+    >
+      <Stack.Screen
+        component={MainNavigator}
+        name={Routes.MAIN_STACK_NAVIGATOR}
+      />
+      <Stack.Screen component={AssetsRoutes} name={Routes.ASSETS_LAYOUT} />
+    </Stack.Navigator>
+  );
+}
+
 function MainNavigatorWrapper() {
   return (
     <Stack.Navigator
@@ -149,7 +165,7 @@ function MainNavigatorWrapper() {
       screenOptions={defaultScreenStackOptions}
     >
       <Stack.Screen
-        component={MainNavigator}
+        component={MainStackNavigator}
         name={Routes.MAIN_NAVIGATOR_WRAPPER}
       />
     </Stack.Navigator>
@@ -163,7 +179,10 @@ function NativeStackFallbackNavigator() {
       {...stackNavigationConfig}
       screenOptions={defaultScreenStackOptions}
     >
-      <Stack.Screen component={MainNavigator} name={Routes.MAIN_NAVIGATOR} />
+      <Stack.Screen
+        component={MainStackNavigator}
+        name={Routes.MAIN_NAVIGATOR}
+      />
       <Stack.Screen
         component={ImportSeedPhraseSheet}
         name={Routes.IMPORT_SEED_PHRASE_SHEET}

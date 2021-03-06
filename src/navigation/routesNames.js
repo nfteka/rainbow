@@ -3,6 +3,10 @@ import isNativeStackAvailable from '../helpers/isNativeStackAvailable';
 const Routes = {
   ADD_CASH_SCREEN_NAVIGATOR: 'AddCashSheetNavigator',
   ADD_CASH_SHEET: 'AddCashSheet',
+  ASSETS: 'Assets',
+  ASSETS_ITEM: 'AssetsItem',
+  ASSETS_LAYOUT: 'AssetsLayout',
+  ASSETS_LIST: 'AssetsList',
   AVATAR_BUILDER: 'AvatarBuilder',
   BACKUP_SCREEN: 'BackupScreen',
   BACKUP_SHEET: 'BackupSheet',
@@ -22,6 +26,7 @@ const Routes = {
   MAIN_NATIVE_BOTTOM_SHEET_NAVIGATOR: 'MainNativeBottomSheetNavigation',
   MAIN_NAVIGATOR: 'MainNavigator',
   MAIN_NAVIGATOR_WRAPPER: 'MainNavigatorWrapper',
+  MAIN_STACK_NAVIGATOR: 'MainStackNavigator',
   MODAL_SCREEN: 'ModalScreen',
   NATIVE_STACK: 'NativeStack',
   PIN_AUTHENTICATION_SCREEN: 'PinAuthenticationScreen',
