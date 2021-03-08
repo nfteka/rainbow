@@ -1,5 +1,5 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { FlexItem } from '../components/layout';
 import { TestnetToast } from '../components/toasts';
 import AssetsItem from '../screens/AssetsItem';
@@ -8,7 +8,7 @@ import { stackNavigationConfig } from './config';
 import { useAccountSettings } from '@rainbow-me/hooks';
 import Routes from '@rainbow-me/routes';
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createStackNavigator();
 
 export function AssetsRoutes() {
   const { network } = useAccountSettings();

@@ -90,7 +90,6 @@ target 'Nfteka' do
   # you should disable these next few lines.
   if ENV['SKIP_FLIPPER'] != "true"
     use_flipper!
-    pod 'RNSharedElement', :path => '../node_modules/react-native-shared-element'
 
     post_install do |installer|
       flipper_post_install(installer)
