@@ -29,6 +29,7 @@ const Routes = {
   MAIN_STACK_NAVIGATOR: 'MainStackNavigator',
   MODAL_SCREEN: 'ModalScreen',
   NATIVE_STACK: 'NativeStack',
+  OWNER_PROFILE: 'OwnerProfile',
   PIN_AUTHENTICATION_SCREEN: 'PinAuthenticationScreen',
   PROFILE_SCREEN: 'ProfileScreen',
   QR_SCANNER_SCREEN: 'QRScannerScreen',
