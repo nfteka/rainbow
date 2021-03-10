@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
+import { ButtonPressAnimation } from '../animations';
 import { Icon } from '../icons';
 import ImgixImage from '../images/ImgixImage';
 import { Flex } from '../layout';
@@ -15,7 +16,7 @@ const BetweenContainer = styled(Flex)`
   margin-bottom: 10px;
 `;
 
-const SharedButton = styled(TouchableOpacity).attrs({ activeOpacity: 0.8 })`
+const SharedButton = styled(ButtonPressAnimation)`
   width: 32px;
   height: 32px;
   right: 0;

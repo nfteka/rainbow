@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
-import {
-  FlatList,
-  RefreshControl,
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import { FlatList, RefreshControl, StatusBar } from 'react-native';
 import styled from 'styled-components';
 import AssetsHeader from '../components/assets-header';
 import { AssetsListItem } from '../components/assets-list-item';
+import { Page } from '../components/layout';
 import { useTheme } from '../context/ThemeContext';
-import { useHideSplashScreen } from '@rainbow-me/hooks';
 import { mockAssets } from '../mock';
+import { useHideSplashScreen } from '@rainbow-me/hooks';
 
-const Container = styled.View`
+const Container = styled(Page)`
   background-color: ${props => props.color};
 `;
 
-const ListContainer = styled(SafeAreaView)`
+const ListContainer = styled(FlatList)`
   background-color: ${props => props.color};
 `;
 
@@ -32,22 +28,21 @@ export default function AssetsList() {
     <Container color={colors.white}>
       <StatusBar barStyle="dark-content" />
       <AssetsHeader />
-      <ListContainer color={colors.blueGreyDarkLight}>
-        <FlatList
-          data={mockAssets}
-          keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => {
-                onRefresh(true);
-                refreshData();
-              }}
-              refreshing={refresh}
-            />
-          }
-          renderItem={renderItem}
-        />
-      </ListContainer>
+      <ListContainer
+        color={colors.blueGreyDarkLight}
+        data={mockAssets}
+        keyExtractor={item => item.id}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => {
+              onRefresh(true);
+              refreshData();
+            }}
+            refreshing={refresh}
+          />
+        }
+        renderItem={renderItem}
+      />
     </Container>
   );
 }

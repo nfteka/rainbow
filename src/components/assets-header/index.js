@@ -1,9 +1,15 @@
 import React, { useCallback } from 'react';
+import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
-import { Header, HeaderButton } from '../header';
+import { Header } from '../header';
 import { Icon } from '../icons';
+import CircleHeaderButton from './CircleHeaderButton';
 import { useNavigation } from '@rainbow-me/navigation';
 import Routes from '@rainbow-me/routes';
+
+const HeaderContainer = styled(Header)`
+  padding-bottom: 15px;
+`;
 
 export default function AssetsHeader() {
   const { colors } = useTheme();
@@ -18,8 +24,9 @@ export default function AssetsHeader() {
     navigate,
   ]);
   return (
-    <Header align="center" justify="space-between">
-      <HeaderButton
+    <HeaderContainer align="center" justify="space-between">
+      <CircleHeaderButton
+        color={colors.white}
         onPress={onPressSettings}
         opacityTouchable={false}
         radiusAndroid={42}
@@ -33,8 +40,9 @@ export default function AssetsHeader() {
         testID="settings-button"
       >
         <Icon color={colors.black} name="gear" />
-      </HeaderButton>
-      <HeaderButton
+      </CircleHeaderButton>
+      <CircleHeaderButton
+        color={colors.white}
         onPress={onPressWallet}
         opacityTouchable={false}
         radiusAndroid={42}
@@ -48,7 +56,7 @@ export default function AssetsHeader() {
         testID="settings-button"
       >
         <Icon color={colors.black} name="walletIcon" />
-      </HeaderButton>
-    </Header>
+      </CircleHeaderButton>
+    </HeaderContainer>
   );
 }

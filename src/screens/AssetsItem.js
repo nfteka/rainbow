@@ -5,16 +5,17 @@ import AssetsHeader from '../components/assets-header';
 import AssetsItemHeader from '../components/assets-list-item/AssetsItemHeader';
 import { Button } from '../components/buttons';
 import ImgixImage from '../components/images/ImgixImage';
-import { Flex } from '../components/layout';
+import { Flex, Page } from '../components/layout';
 import { H1, Text } from '../components/text';
 import { useTheme } from '../context/ThemeContext';
-import { WalletPage } from './WalletScreen';
 
-const Container = styled(WalletPage)`
+const Container = styled(Page)`
   background-color: ${props => props.color};
 `;
 
-const ScrollContainer = styled(ScrollView)`
+const ScrollContainer = styled(ScrollView).attrs({
+  contentContainerStyle: { paddingBottom: 400 },
+})`
   background-color: ${props => props.color};
 `;
 
@@ -32,7 +33,7 @@ const ImageContainer = styled(ImgixImage)`
   margin-top: 8px;
 `;
 
-const AssetFooter = styled(Flex)`
+const AssetFooter = styled.View`
   width: 100%;
   position: absolute;
   flex-direction: column;
@@ -49,7 +50,7 @@ const ButtonContainer = styled(Button)`
   justify-content: center;
   padding-left: 50px;
   padding-right: 50px;
-`
+`;
 
 const ButtonText = styled(Text)`
   font-style: normal;
@@ -71,7 +72,6 @@ const FreeText = styled(Text)`
 `;
 
 export default function AssetsItem(props) {
-  console.log('PROPS ASSETS ITEM', props.route.params);
   const { asset } = props.route.params;
   const { colors } = useTheme();
   const onBuyPress = () => {
@@ -110,7 +110,9 @@ export default function AssetsItem(props) {
           </ButtonText>
         </ButtonContainer>
         <FreeContainer>
-          <FreeText>Service fee 2.5% 0.615 ETH $1,026.71</FreeText>
+          <FreeText>
+            Service fee 2.5% {asset.eth_price} ETH ${asset.usd_price}
+          </FreeText>
         </FreeContainer>
       </AssetFooter>
     </>

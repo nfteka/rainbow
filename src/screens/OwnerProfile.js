@@ -1,14 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import AssetsHeader from '../components/assets-header';
-import { WalletPage } from './WalletScreen';
+import { Page } from '../components/layout';
 
 export default function OwnerProfile(props) {
-  console.log('PROPS OWNER SCREEN', props.route.params);
   return (
-    <WalletPage>
+    <Page>
       <StatusBar barStyle="dark-content" />
       <AssetsHeader />
-    </WalletPage>
+    </Page>
   );
 }
