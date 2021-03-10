@@ -23,6 +23,7 @@ export default function AssetsHeader() {
   const onPressSettings = useCallback(() => navigate(Routes.SETTINGS_MODAL), [
     navigate,
   ]);
+
   return (
     <HeaderContainer align="center" justify="space-between">
       <CircleHeaderButton
