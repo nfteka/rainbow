@@ -92,7 +92,7 @@ export default function AssetsItem(props) {
             }}
           />
           <ContentContainer>
-            <H1>{asset.description}</H1>
+            <H1>{asset.title}</H1>
           </ContentContainer>
         </ScrollContainer>
       </Container>

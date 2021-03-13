@@ -1,11 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
 import { Button } from '../buttons';
 import { Flex } from '../layout';
 import { H1, Text } from '../text';
-import { useNavigation } from '@rainbow-me/navigation';
-import Routes from '@rainbow-me/routes';
 
 const TextContainer = styled(Flex)`
   margin-top: 8px;
@@ -41,7 +39,7 @@ const ButtonText = styled(Text)`
   color: ${props => props.color};
 `;
 
-export default function AssetsItemFooter({ asset }) {
+function AssetsItemFooter({ asset }) {
   const { colors } = useTheme();
   const onBuyPress = () => {
     console.log('BUY BUTTON PRESS');
@@ -49,7 +47,10 @@ export default function AssetsItemFooter({ asset }) {
   return (
     <BetweenContainer>
       <TextContainer>
-        <CryptCount>{asset.eth_price} ETH</CryptCount>
+        <CryptCount>
+          {asset.eth_price}
+          {asset.symbol}
+        </CryptCount>
         <Count>${asset.usd_price}</Count>
       </TextContainer>
       <Button
@@ -66,3 +67,5 @@ export default function AssetsItemFooter({ asset }) {
     </BetweenContainer>
   );
 }
+
+export default memo(AssetsItemFooter);

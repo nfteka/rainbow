@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import { Share, TouchableOpacity } from 'react-native';
+import React, { memo, useCallback } from 'react'
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
 import { ButtonPressAnimation } from '../animations';
-import { Icon } from '../icons';
 import ImgixImage from '../images/ImgixImage';
 import { Flex } from '../layout';
 import { Bold, Text } from '../text';
@@ -51,7 +50,7 @@ const OwnerBlock = styled(Flex)`
   justify-content: space-around;
 `;
 
-export default function AssetsItemHeader({ owner }) {
+function AssetsItemHeader({ owner }) {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
 
@@ -73,7 +72,7 @@ export default function AssetsItemHeader({ owner }) {
         <TouchableOpacity activeOpacity={0.8} onPress={ownerPress}>
           <OwnerBlock>
             <OwnerLabel>Owner</OwnerLabel>
-            <Bold>@{owner.username.toLowerCase()}</Bold>
+            <Bold>@{owner.user.username}</Bold>
           </OwnerBlock>
         </TouchableOpacity>
       </OwnerContainer>
@@ -81,3 +80,5 @@ export default function AssetsItemHeader({ owner }) {
     </BetweenContainer>
   );
 }
+
+export default memo(AssetsItemHeader);

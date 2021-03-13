@@ -9,7 +9,7 @@ const CircleHeaderButtonShadows = colors => [
   // [0, 3, 5, colors.shadow, 0.2],
 ];
 
-export default function CircleHeaderButton({ color, children, ...props }) {
+export default function CircleHeaderButton({ children, ...props }) {
   const { colors } = useTheme();
 
   const shadows = useMemo(() => CircleHeaderButtonShadows(colors), [colors]);
@@ -18,7 +18,7 @@ export default function CircleHeaderButton({ color, children, ...props }) {
     <HeaderButton {...props}>
       <ShadowStack
         {...borders.buildCircleAsObject(45)}
-        backgroundColor={color}
+        backgroundColor={colors.whiteBlueGrey}
         shadows={shadows}
       >
         <Centered cover>{children}</Centered>

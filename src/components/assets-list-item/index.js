@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import ImgixImage from '../images/ImgixImage';
@@ -38,7 +38,7 @@ const Image = styled(ImgixImage)`
   border-radius: 8px;
 `;
 
-export function AssetsListItem({ asset }) {
+function AssetsListItem({ asset }) {
   const { navigate } = useNavigation();
   const onAssetPress = useCallback(
     () => navigate(Routes.ASSETS_ITEM, { asset }),
@@ -55,9 +55,11 @@ export function AssetsListItem({ asset }) {
         />
       </ImageContainer>
       <AssetTextContainer onPress={onAssetPress}>
-        <AssetText>{asset.description}</AssetText>
+        <AssetText>{asset.title}</AssetText>
       </AssetTextContainer>
       <AssetsItemFooter asset={asset} />
     </Container>
   );
 }
+
+export default memo(AssetsListItem);

@@ -114,7 +114,6 @@ function AddCashFlowNavigator() {
 
 function MainNavigator() {
   const initialRoute = useContext(InitialRouteContext);
-
   return (
     <Stack.Navigator
       initialRouteName={initialRoute}

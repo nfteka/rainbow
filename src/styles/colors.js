@@ -36,6 +36,7 @@ const darkModeColors = {
   trueBlack: '#000000',
   trueWhite: '#FFFFFF',
   white: '#12131A',
+  whiteBlueGrey: '#1E2027',
   whiteLabel: '#FFFFFF',
 };
 
@@ -88,6 +89,7 @@ const getColorsByTheme = darkMode => {
     swapPurple: '#575CFF', // '87, 92, 255'
     transparent: 'transparent',
     white: '#FFFFFF', // '255, 255, 255'
+    whiteBlueGrey: '#FFFFFF',
     whiteLabel: '#FFFFFF', // '255, 255, 255'
     yellow: '#FFD657', // '255, 214, 87'
     yellowFavorite: '#FFB200', // '255, 178, 0'

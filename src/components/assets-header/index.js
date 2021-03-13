@@ -8,6 +8,7 @@ import { useNavigation } from '@rainbow-me/navigation';
 import Routes from '@rainbow-me/routes';
 
 const HeaderContainer = styled(Header)`
+  margin-top: 10px;
   padding-bottom: 15px;
 `;
 
@@ -27,7 +28,6 @@ export default function AssetsHeader() {
   return (
     <HeaderContainer align="center" justify="space-between">
       <CircleHeaderButton
-        color={colors.white}
         onPress={onPressSettings}
         opacityTouchable={false}
         radiusAndroid={42}
@@ -43,7 +43,6 @@ export default function AssetsHeader() {
         <Icon color={colors.black} name="gear" />
       </CircleHeaderButton>
       <CircleHeaderButton
-        color={colors.white}
         onPress={onPressWallet}
         opacityTouchable={false}
         radiusAndroid={42}
@@ -54,7 +53,7 @@ export default function AssetsHeader() {
           marginLeft: 5,
           width: 42,
         }}
-        testID="settings-button"
+        testID="wallet-button"
       >
         <Icon color={colors.black} name="walletIcon" />
       </CircleHeaderButton>

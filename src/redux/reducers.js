@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import addCash from './addCash';
 import appState from './appState';
+import assets from './assets';
 import charts from './charts';
 import contacts from './contacts';
 import data from './data';
@@ -16,6 +17,7 @@ import openStateSettings, {
   openSavingsReducer,
   openSmallBalancesReducer,
 } from './openStateSettings';
+import owner from './owner';
 import raps from './raps';
 import requests from './requests';
 import settings from './settings';
@@ -30,6 +32,7 @@ import wallets from './wallets';
 export default combineReducers({
   addCash,
   appState,
+  assets,
   charts,
   contacts,
   data,
@@ -43,6 +46,7 @@ export default combineReducers({
   openSavings: openSavingsReducer,
   openSmallBalances: openSmallBalancesReducer,
   openStateSettings,
+  owner,
   raps,
   requests,
   settings,
