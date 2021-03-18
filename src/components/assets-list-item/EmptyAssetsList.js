@@ -1,5 +1,6 @@
 import { times } from 'lodash';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
 import { Centered, Column } from '../layout';
@@ -18,18 +19,27 @@ const EmptyAssetsList = ({
   ...props
 }) => {
   const { colors } = useTheme();
+  const [animation, setAnimation] = useState(animated);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimation(prevState => !prevState);
+    }, 300);
+    return () => clearInterval(interval);
+  });
   return (
     <Container color={colors.blueGreyDarkLight} {...props}>
       <Centered flex={1}>
         <Column cover>
-          {times(skeletonCount, index => (
-            <AssetsListItemSkeleton
-              animated={!animated}
-              descendingOpacity={descendingOpacity || animated}
-              index={index}
-              key={`skeleton${index}`}
-            />
-          ))}
+          <ScrollView>
+            {times(skeletonCount, index => (
+              <AssetsListItemSkeleton
+                animated={animated}
+                descendingOpacity={descendingOpacity || animation}
+                index={index}
+                key={`skeleton${index}`}
+              />
+            ))}
+          </ScrollView>
         </Column>
       </Centered>
     </Container>
