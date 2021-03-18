@@ -7,8 +7,16 @@ import AssetsListItem from '../components/assets-list-item';
 import EmptyAssetsList from '../components/assets-list-item/EmptyAssetsList';
 import { Page } from '../components/layout';
 import { useTheme } from '../context/ThemeContext';
-import { useHideSplashScreen, usePrevious } from '@rainbow-me/hooks';
-import { getAssetsList, reloadAssetsList } from '@rainbow-me/redux/assets';
+import {
+  useHideSplashScreen,
+  useInitializeWallet,
+  usePrevious,
+} from '@rainbow-me/hooks';
+import {
+  getAssetsList,
+  handleSeaportEvents,
+  reloadAssetsList,
+} from '@rainbow-me/redux/assets';
 
 const Container = styled(Page)`
   background-color: ${props => props.color};
@@ -20,23 +28,33 @@ const ListContainer = styled(FlatList)`
 
 export default function AssetsList() {
   const { assets, assetsLoading } = useSelector(state => state.assets);
+  const { network } = useSelector(state => state.settings);
   const [refresh, onRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
   const hideSplashScreen = useHideSplashScreen();
   const dispatch = useDispatch();
+  const { colors } = useTheme();
+  const preLoadingAssets = usePrevious(assetsLoading);
+
+  const initializeWallet = useInitializeWallet();
 
   useEffect(() => {
+    setLoading(true);
     dispatch(getAssetsList());
+  }, [dispatch, network]);
+
+  useEffect(() => {
+    dispatch(handleSeaportEvents());
     hideSplashScreen();
+    initializeWallet(null, null, null, true);
   }, []);
-  const preLoadingAssets = usePrevious(assetsLoading);
 
   useEffect(() => {
     if (preLoadingAssets && !assetsLoading) {
       setLoading(false);
     }
   }, [preLoadingAssets, assetsLoading]);
-  const { colors } = useTheme();
+
   const refreshData = () => {
     dispatch(
       reloadAssetsList(() => {
@@ -44,7 +62,9 @@ export default function AssetsList() {
       })
     );
   };
+
   const renderItem = ({ item }) => <AssetsListItem asset={item} />;
+
   return (
     <Container color={colors.white}>
       <StatusBar barStyle="dark-content" />
@@ -55,7 +75,7 @@ export default function AssetsList() {
         <ListContainer
           color={colors.blueGreyDarkLight}
           data={assets}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.asset_contract.address}
           refreshControl={
             <RefreshControl
               onRefresh={() => {
