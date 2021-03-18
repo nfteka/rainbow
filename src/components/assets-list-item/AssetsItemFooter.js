@@ -1,9 +1,11 @@
 import React, { memo } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useTheme } from '../../context/ThemeContext';
 import { Button } from '../buttons';
 import { Flex } from '../layout';
 import { H1, Text } from '../text';
+import { buyOrder, handleSeaportEvents } from '@rainbow-me/redux/assets';
 
 const TextContainer = styled(Flex)`
   margin-top: 8px;
@@ -41,17 +43,21 @@ const ButtonText = styled(Text)`
 
 function AssetsItemFooter({ asset }) {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const onBuyPress = () => {
-    console.log('BUY BUTTON PRESS');
+    dispatch(handleSeaportEvents());
+    dispatch(
+      buyOrder({
+        address: asset.asset_contract.address,
+        tokenId: asset.tokenId,
+      })
+    );
   };
   return (
     <BetweenContainer>
       <TextContainer>
-        <CryptCount>
-          {asset.eth_price}
-          {asset.symbol}
-        </CryptCount>
-        <Count>${asset.usd_price}</Count>
+        <CryptCount>{asset.ethPrice}ETH</CryptCount>
+        <Count>${asset.usdPrice}</Count>
       </TextContainer>
       <Button
         backgroundColor={colors.black}

@@ -1,13 +1,21 @@
+import { captureException } from '@sentry/react-native';
 import React from 'react';
-import { ScrollView, StatusBar } from 'react-native';
+import { Image, ScrollView, StatusBar } from 'react-native';
+import { SMART_CONTRACT } from 'react-native-dotenv';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import AssetsHeader from '../components/assets-header';
 import AssetsItemHeader from '../components/assets-list-item/AssetsItemHeader';
 import { Button } from '../components/buttons';
-import ImgixImage from '../components/images/ImgixImage';
 import { Flex, Page } from '../components/layout';
 import { H1, Text } from '../components/text';
 import { useTheme } from '../context/ThemeContext';
+import { sendTransaction } from '../model/wallet';
+import {
+  createBuyTransaction,
+} from '@rainbow-me/handlers/web3';
+import { useAccountSettings, useGas } from '@rainbow-me/hooks';
+import logger from 'logger';
 
 const Container = styled(Page)`
   background-color: ${props => props.color};
@@ -25,12 +33,15 @@ const ContentContainer = styled.View`
   margin-top: 20px;
 `;
 
-const ImageContainer = styled(ImgixImage)`
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
+const ImageContainer = styled.View`
+  min-height: 50px;
   max-height: 550px;
   margin-top: 8px;
+`;
+
+const AssetImage = styled(Image)`
+  width: 100%;
+  height: 100%;
 `;
 
 const AssetFooter = styled.View`
@@ -86,11 +97,15 @@ export default function AssetsItem(props) {
           <ContentContainer>
             <AssetsItemHeader owner={asset.owner} />
           </ContentContainer>
-          <ImageContainer
-            source={{
-              uri: asset.image_url,
-            }}
-          />
+          <ImageContainer>
+            <AssetImage
+              resizeMode="contain"
+              source={{
+                uri: asset.image_url,
+              }}
+            />
+          </ImageContainer>
+
           <ContentContainer>
             <H1>{asset.title}</H1>
           </ContentContainer>
@@ -106,12 +121,12 @@ export default function AssetsItem(props) {
           onPress={onBuyPress}
         >
           <ButtonText color={colors.white}>
-            Buy now for ${asset.usd_price}
+            Buy now for ${asset.usdPrice}
           </ButtonText>
         </ButtonContainer>
         <FreeContainer>
           <FreeText>
-            Service fee 2.5% {asset.eth_price} ETH ${asset.usd_price}
+            Service fee 2.5% {asset.ethPrice} ETH ${asset.usdPrice}
           </FreeText>
         </FreeContainer>
       </AssetFooter>

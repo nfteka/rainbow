@@ -1,9 +1,7 @@
-import React, { memo, useCallback } from 'react'
-import { TouchableOpacity } from 'react-native';
+import React, { memo, useCallback } from 'react';
+import { Image, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
-import { useTheme } from '../../context/ThemeContext';
 import { ButtonPressAnimation } from '../animations';
-import ImgixImage from '../images/ImgixImage';
 import { Flex } from '../layout';
 import { Bold, Text } from '../text';
 import SharedButton from './SharedButton';
@@ -23,12 +21,10 @@ const ProfileButton = styled(ButtonPressAnimation)`
   top: 0;
   justify-content: center;
   align-items: center;
-
-  background-color: ${props => props.color};
   border-radius: 16px;
 `;
 
-const ImageContainer = styled(ImgixImage)`
+const ImageContainer = styled(Image)`
   width: 100%;
   height: 100%;
   margin-top: 8px;
@@ -51,18 +47,16 @@ const OwnerBlock = styled(Flex)`
 `;
 
 function AssetsItemHeader({ owner }) {
-  const { colors } = useTheme();
   const { navigate } = useNavigation();
 
   const ownerPress = useCallback(
     () => navigate(Routes.OWNER_PROFILE, { owner }),
     [navigate]
   );
-
   return (
     <BetweenContainer>
       <OwnerContainer>
-        <ProfileButton color={colors.clearGrey} onPress={ownerPress}>
+        <ProfileButton onPress={ownerPress}>
           <ImageContainer
             source={{
               uri: owner.profile_img_url,
