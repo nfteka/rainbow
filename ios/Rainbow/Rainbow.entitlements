@@ -15,15 +15,21 @@
 		<string>webcredentials:rainbow.me</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
-	<array/>
+	<array>
+		<string>iCloud.me.rainbow.nfteka</string>
+	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
 		<string>CloudDocuments</string>
 	</array>
 	<key>com.apple.developer.in-app-payments</key>
-	<array/>
+	<array>
+		<string>merchant.me.rainbow.nfteka</string>
+	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
-	<array/>
+	<array>
+		<string>iCloud.me.rainbow.nfteka</string>
+	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 </dict>

@@ -1,7 +1,6 @@
 import React, { memo, useCallback } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import styled from 'styled-components';
-import ImgixImage from '../images/ImgixImage';
 import { Bold } from '../text';
 import AssetsItemFooter from './AssetsItemFooter';
 import AssetsItemHeader from './AssetsItemHeader';
@@ -28,11 +27,12 @@ const AssetTextContainer = styled(TouchableOpacity).attrs({
 `;
 
 const ImageContainer = styled(TouchableOpacity).attrs({ activeOpacity: 0.8 })`
-  max-height: 450px;
+  min-height: 100px;
+  max-height: 550px;
   margin-top: 8px;
 `;
 
-const Image = styled(ImgixImage)`
+const AssetImage = styled(Image)`
   width: 100%;
   height: 100%;
   border-radius: 8px;
@@ -44,13 +44,15 @@ function AssetsListItem({ asset }) {
     () => navigate(Routes.ASSETS_ITEM, { asset }),
     [navigate]
   );
+
   return (
     <Container>
       <AssetsItemHeader owner={asset.owner} />
       <ImageContainer onPress={onAssetPress}>
-        <Image
+        <AssetImage
+          resizeMode="contain"
           source={{
-            uri: asset.image_url,
+            uri: asset.image_preview_url,
           }}
         />
       </ImageContainer>

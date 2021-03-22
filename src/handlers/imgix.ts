@@ -22,8 +22,8 @@ const shouldCreateImgixClient = (): ImgixClient | null => {
       secureURLToken,
     });
   }
-  // eslint-disable-next-line no-console
-  console.log(
+
+  logger.log(
     '[Imgix] Image signing disabled. Please ensure you have specified both IMGIX_DOMAIN and IMGIX_TOKEN inside your .env.'
   );
   return null;

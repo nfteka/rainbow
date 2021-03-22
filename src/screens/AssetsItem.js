@@ -1,6 +1,7 @@
 import { captureException } from '@sentry/react-native';
-import React from 'react';
-import { Image, ScrollView, StatusBar } from 'react-native';
+import { get } from 'lodash';
+import React, { useEffect } from 'react';
+import { Image, InteractionManager, ScrollView, StatusBar } from 'react-native';
 import { SMART_CONTRACT } from 'react-native-dotenv';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -13,6 +14,7 @@ import { useTheme } from '../context/ThemeContext';
 import { sendTransaction } from '../model/wallet';
 import {
   createBuyTransaction,
+  estimateGasLimit,
 } from '@rainbow-me/handlers/web3';
 import { useAccountSettings, useGas } from '@rainbow-me/hooks';
 import logger from 'logger';
@@ -85,8 +87,63 @@ const FreeText = styled(Text)`
 export default function AssetsItem(props) {
   const { asset } = props.route.params;
   const { colors } = useTheme();
-  const onBuyPress = () => {
-    console.log('BUY PRESS');
+  const dispatch = useDispatch();
+  const { accountAddress } = useAccountSettings();
+  const {
+    gasLimit,
+    selectedGasPrice,
+    startPollingGasPrices,
+    stopPollingGasPrices,
+  } = useGas();
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => startPollingGasPrices());
+    return () => {
+      InteractionManager.runAfterInteractions(() => stopPollingGasPrices());
+    };
+  }, [startPollingGasPrices, stopPollingGasPrices]);
+
+  const onBuyPress = async () => {
+    // dispatch(handleSeaportEvents());
+    // dispatch(
+    //   buyOrder({ address: asset.assetContract.address, tokenId: asset.tokenId })
+    // );
+
+    try {
+      const updatedGasLimit = await estimateGasLimit({
+        address: SMART_CONTRACT,
+        amount: asset.ethPrice,
+        asset,
+        recipient: accountAddress,
+      });
+
+      console.log('updatedGasLimit => ', updatedGasLimit);
+
+      const txDetails = {
+        amount: asset.ethPrice,
+        asset,
+        from: accountAddress,
+        gasLimit: 10000000, // updatedGasLimit,
+        gasPrice: get(selectedGasPrice, 'value.amount'),
+        to: SMART_CONTRACT,
+      };
+
+      console.log(txDetails.asset.sell_orders[0]);
+
+      try {
+        const signableTransaction = await createBuyTransaction(txDetails);
+        const txResult = await sendTransaction({
+          transaction: signableTransaction,
+        });
+
+        console.log('txResult => ', txResult);
+      } catch (error) {
+        logger.sentry('onSubmit error', error);
+        captureException(error);
+      }
+    } catch (e) {
+      logger.sentry('onSubmit error', e);
+    }
   };
   return (
     <>

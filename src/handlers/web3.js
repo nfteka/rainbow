@@ -207,14 +207,13 @@ export const getTxDetails = async transaction => {
   const value = transaction.amount ? toHex(toWei(transaction.amount)) : '0x00';
   const gasLimit = toHex(transaction.gasLimit) || undefined;
   const gasPrice = toHex(transaction.gasPrice) || undefined;
-  const tx = {
+  return {
     data,
     gasLimit,
     gasPrice,
     to,
     value,
   };
-  return tx;
 };
 
 export const resolveUnstoppableDomain = async domain => {
@@ -300,6 +299,81 @@ export const createSignableTransaction = async transaction => {
     ? await getTransferNftTransaction(transaction)
     : await getTransferTokenTransaction(transaction);
   return getTxDetails(result);
+};
+
+export const createBuyTransaction = async transaction => {
+  const result = await getTransferNftBuyTransaction(transaction);
+  return getTxBuyDetails(result);
+};
+
+export const getTransferNftBuyTransaction = async transaction => {
+  const recipient = await resolveNameOrAddress(transaction.to);
+  const { from } = transaction;
+  const contractAddress = get(transaction, 'asset.asset_contract.address');
+  const value = transaction.asset.sell_orders[0].current_price;
+  const amount = transaction.asset.sell_orders[0].eth_price;
+  const data = getDataForNftBuyTransfer(
+    from,
+    contractAddress,
+    transaction.asset,
+    value
+  );
+  return {
+    amount,
+    data,
+    from,
+    gasLimit: transaction.gasLimit,
+    gasPrice: transaction.gasPrice,
+    to: recipient,
+    value: convertStringToHex(value),
+  };
+};
+
+export const getDataForNftBuyTransfer = (from, to, asset, value) => {
+  const nftVersion = get(asset, 'asset_contract.nft_version');
+  const schema_name = get(asset, 'asset_contract.schema_name');
+  if (nftVersion === '3.0') {
+    const transferMethodHash = smartContractMethods.nft_transfer_from.hash;
+    return ethereumUtils.getDataString(transferMethodHash, [
+      ethereumUtils.removeHexPrefix(from),
+      ethereumUtils.removeHexPrefix(to),
+      convertStringToHex(asset.id),
+      convertStringToHex(value),
+    ]);
+  } else if (schema_name === 'ERC1155') {
+    const transferMethodHash =
+      smartContractMethods.erc1155_safe_transfer_from.hash;
+    return ethereumUtils.getDataString(transferMethodHash, [
+      ethereumUtils.removeHexPrefix(from),
+      ethereumUtils.removeHexPrefix(to),
+      convertStringToHex(value),
+      convertStringToHex(asset.id),
+      convertStringToHex('1'),
+      convertStringToHex('160'),
+      convertStringToHex('0'),
+    ]);
+  }
+  const transferMethodHash = smartContractMethods.nft_transfer.hash;
+  return ethereumUtils.getDataString(transferMethodHash, [
+    ethereumUtils.removeHexPrefix(to),
+    convertStringToHex(asset.id),
+    convertStringToHex(value),
+  ]);
+};
+
+export const getTxBuyDetails = async transaction => {
+  const { to } = transaction;
+  const data = transaction.data ? transaction.data : '0x';
+  const value = transaction.amount ? toHex(toWei(transaction.amount)) : '0x00';
+  const gasLimit = toHex(transaction.gasLimit) || undefined;
+  const gasPrice = toHex(transaction.gasPrice) || undefined;
+  return {
+    data,
+    gasLimit,
+    gasPrice,
+    to,
+    value,
+  };
 };
 
 const estimateAssetBalancePortion = asset => {

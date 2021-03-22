@@ -129,6 +129,7 @@
     "match-sorter": "^4.0.2",
     "mnemonist": "^0.38.1",
     "nanoid": "^2.1.6",
+    "opensea-js": "^1.1.11",
     "parse-ms": "^2.1.0",
     "patch-package": "^6.2.0",
     "path-browserify": "0.0.0",
@@ -226,6 +227,7 @@
     "use-memo-one": "^1.1.1",
     "util": "^0.10.3",
     "vm-browserify": "0.0.4",
+    "web3": "^1.3.4",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -379,6 +381,9 @@
   "lavamoat": {
     "allowScripts": {
       "Nfteka": false,
+      "uglifyjs-webpack-plugin": false,
+      "bufferutil": false,
+      "utf-8-validate": false,
       "@scarf/scarf": false,
       "@lavamoat/preinstall-always-fail": false,
       "core-js": false,
